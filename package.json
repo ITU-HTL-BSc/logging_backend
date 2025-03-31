@@ -1,0 +1,20 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "docker:build": "docker build --no-cache -t logging_backend -f ./Dockerfile .",
+        "docker:run": "docker run -p 3000:3000 -v $(pwd)/db:/usr/src/app/db -d logging_backend"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.21.2",
+        "pino": "^9.6.0",
+        "sqlite3": "^5.1.7"
+    }
+}
