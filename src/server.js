@@ -6,7 +6,7 @@ const db = require("./db");
 const app = express();
 
 // OS_BROWSER_IMPLEMENTATION
-const env = "mac_safari_consolelog";
+const env = "GAME_TEST1";
 
 app.use(cors());
 app.use(express.json());
@@ -22,14 +22,16 @@ app.post("/log", (req, res) => {
 });
 
 app.post("/metric", (req, res) => {
-  const { exec_time } = req.query;
+  const { fps, keyPress } = req.query;
 
-  if (!exec_time) {
+  console.log("HEJ");
+
+  if (!fps || !keyPress) {
     res.status(400).send("Missing metric parameters.");
     return;
   }
-  logger.metric(`Added metric: ${exec_time}`);
-  db.insertMetrics(env, parseFloat(exec_time));
+  logger.metric(`Added metric: ${fps}, ${keyPress}`);
+  db.insertMetrics(env, parseFloat(fps), parseFloat(keyPress));
   res.sendStatus(200);
 });
 
