@@ -22,16 +22,14 @@ app.post("/log", (req, res) => {
 });
 
 app.post("/metric", (req, res) => {
-  const { fps, keyPress } = req.query;
+  const { fps } = req.query;
 
-  console.log("HEJ");
-
-  if (!fps || !keyPress) {
+  if (!fps) {
     res.status(400).send("Missing metric parameters.");
     return;
   }
-  logger.metric(`Added metric: ${fps}, ${keyPress}`);
-  db.insertMetrics(env, parseFloat(fps), parseFloat(keyPress));
+  logger.metric(`Added metric: ${fps}`);
+  db.insertMetrics(env, parseFloat(fps));
   res.sendStatus(200);
 });
 
