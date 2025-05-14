@@ -22,14 +22,14 @@ app.post("/log", (req, res) => {
 });
 
 app.post("/metric", (req, res) => {
-  const { exec_time } = req.query;
+  const { total_lines } = req.query;
 
-  if (!exec_time) {
+  if (!total_lines) {
     res.status(400).send("Missing metric parameters.");
     return;
   }
-  logger.metric(`Added metric: ${exec_time}`);
-  db.insertMetrics(env, parseFloat(exec_time));
+  logger.metric(`Added metric: ${total_lines}`);
+  db.insertMetrics(env, parseFloat(total_lines));
   res.sendStatus(200);
 });
 

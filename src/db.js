@@ -6,29 +6,29 @@ const dbDir = path.resolve(__dirname, "../db");
 const dbFile = path.join(dbDir, "metrics.db");
 
 if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true });
+  fs.mkdirSync(dbDir, { recursive: true });
 }
 
 const db = new sqlite3.Database(dbFile);
 
 function dbInit(environment) {
-    db.serialize(() => {
-        db.run(`
+  db.serialize(() => {
+    db.run(`
             CREATE TABLE IF NOT EXISTS metrics_${environment} (
                 id INTEGER PRIMARY KEY,
-                exec_time REAL
+                total_lines REAL
             )`);
-    });
+  });
 }
 
-function insertMetrics(environment, exec_time) {
-    db.serialize(() => {
-        db.run(
-            `INSERT INTO metrics_${environment}  (exec_time)
+function insertMetrics(environment, total_lines) {
+  db.serialize(() => {
+    db.run(
+      `INSERT INTO metrics_${environment}  (total_lines)
             VALUES (?)`,
-            [exec_time]
-        );
-    });
+      [total_lines]
+    );
+  });
 }
 
 module.exports = { dbInit, insertMetrics };
